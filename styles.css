@@ -50,8 +50,16 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .error {
-    color: #e74c3c;
-    font-size: 0.9rem;
-    display: block;
-    margin-top: 5px;
+    color: red;
+    font-size: 0.875em;
 }
+
+.error-border {
+    border-color: red;
+}
+
+@media (max-width: 768px) {
+    form {
+      padding: 0.5em;
+    }
+  }

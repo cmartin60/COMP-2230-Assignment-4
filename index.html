@@ -13,23 +13,27 @@
 
         <fieldset>
             <legend>Personal Information</legend>
-            <label for="username">Full Name:</label>
-            <input type="text" id="username" name="username" aria-required="true" required>
-            <span id="error-name" class="error" aria-live="polite"></span>
+            <label for="firstname">First Name:</label>
+            <input type="text" id="firstname" name="first_name" pattern="^[a-zA-Z]+$" aria-describedby="error-firstname" required>
+            <span id="error-firstname" class="error" aria-live="polite"></span>
+            <label for="lastname">Last Name:</label>
+            <input type="text" id="lastname" name="last_name" pattern="^[a-zA-Z]+$" aria-describedby="error-lastname" required>
+            <span id="error-lastname" class="error" aria-live="polite"></span>
         </fieldset>
 
         <fieldset>
             <legend>Birth Date:</legend>
             <label for="birth-date">Birthday:</label>
-            <input type="date" id="birth-date" name="birth-date" aria-required="true" required>
+            <input type="date" id="birth-date" name="birth-date" required>
             <span id="error-date" class="error" aria-live="polite"></span>
         </fieldset>
 
         <fieldset>
             <legend>Preferred Game Genre</legend>
-            <label for="genre-horror"><input type="radio" id="genre-horror" name="genre" value="Action" aria-required="true"> Horror</label>
-            <label for="genre-fps"><input type="radio" id="genre-fps" name="genre" value="RPG"> FPS</label>
-            <label for="genre-moba"><input type="radio" id="genre-moba" name="genre" value="Puzzle"> MOBA</label>
+            <label for="genre-horror"><input type="radio" id="genre-horror" name="genre" value="Horror" required> Horror</label>
+            <label for="genre-fps"><input type="radio" id="genre-fps" name="genre" value="FPS"> FPS</label>
+            <label for="genre-moba"><input type="radio" id="genre-moba" name="genre" value="MOBA"> MOBA</label>
+            <label for="genre-other"><input type="radio" id="genre-other" name="genre" value="Other"> Other</label>
             <span id="error-genre" class="error" aria-live="polite"></span>
         </fieldset>
 
@@ -54,7 +58,7 @@
         </fieldset>
 
         <fieldset>
-            <legend>Username (Alphanumeric Only)</legend>
+            <legend>Username</legend>
             <label for="user-id">Username:</label>
             <input type="text" id="user-id" name="user-id" pattern="^[a-zA-Z0-9]+$" title="Alphanumeric characters only" aria-required="true" required>
             <span id="error-user-id" class="error" aria-live="polite"></span>
@@ -71,6 +75,6 @@
 
     </form>
 
-    <script src="scripts.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

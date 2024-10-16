@@ -1,100 +1,108 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('survey-form');
-    
-    // Error display utility function
-    function showError(inputElement, message) {
-        const errorElement = inputElement.nextElementSibling;
-        errorElement.textContent = message;
-        errorElement.classList.add('active');
+// Validation Functions
+function isNotEmpty(value) {
+    return value.trim() !== "";
+}
+
+function isValidName(name) {
+    const namePattern = /^[a-zA-Z]+$/;
+    return namePattern.test(name);
+}
+
+function isSelected(value) {
+    return value !== "";
+}
+
+function hasCheckedOption(name) {
+    const options = document.querySelectorAll(`input[name="${name}"]`);
+    return Array.from(options).some(option => option.checked);
+}
+
+// Show Error Messages
+function showError(element, message) {
+    const errorSpan = document.getElementById(`error-${element.id}`);
+    errorSpan.textContent = message;
+    element.classList.add('error-border');
+}
+
+// Clear Error Messages
+function clearError(element) {
+    const errorSpan = document.getElementById(`error-${element.id}`);
+    errorSpan.textContent = "";
+    element.classList.remove('error-border');
+}
+
+// Form Validation
+function validateForm(event) {
+    let isValid = true;
+
+    // Validate first and last name
+    const firstName = document.getElementById("firstname");
+    if (!isNotEmpty(firstName.value) || !isValidName(firstName.value)) {
+        showError(firstName, "Please enter a valid first name.");
+        isValid = false;
+    } else {
+        clearError(firstName);
     }
 
-    function clearError(inputElement) {
-        const errorElement = inputElement.nextElementSibling;
-        errorElement.textContent = '';
-        errorElement.classList.remove('active');
+    const lastName = document.getElementById("lastname");
+    if (!isNotEmpty(lastName.value) || !isValidName(lastName.value)) {
+        showError(lastName, "Please enter a valid last name.");
+        isValid = false;
+    } else {
+        clearError(lastName);
     }
 
-    // Validation functions
-    function isNotEmpty(inputElement) {
-        if (inputElement.value.trim() === '') {
-            showError(inputElement, 'This field is required.');
-            return false;
-        }
-        clearError(inputElement);
-        return true;
+    // Validate birth date
+    const birthDate = document.getElementById("birth-date");
+    if (!isNotEmpty(birthDate.value)) {
+        showError(birthDate, "Please select your birth date.");
+        isValid = false;
+    } else {
+        clearError(birthDate);
     }
 
-    function isValidUsername(inputElement) {
-        const usernamePattern = /^[a-zA-Z0-9]+$/;
-        if (!usernamePattern.test(inputElement.value.trim())) {
-            showError(inputElement, 'Username must be alphanumeric.');
-            return false;
-        }
-        clearError(inputElement);
-        return true;
+    // Validate radio button (game genre)
+    if (!hasCheckedOption("genre")) {
+        const genreFieldset = document.querySelector("fieldset legend[for='genre']");
+        showError(genreFieldset, "Please select a game genre.");
+        isValid = false;
+    } else {
+        clearError(genreFieldset);
     }
 
-    function hasCheckedOption(radioButtons) {
-        let checked = false;
-        radioButtons.forEach(radio => {
-            if (radio.checked) {
-                checked = true;
-            }
-        });
-
-        if (!checked) {
-            showError(radioButtons[0].closest('fieldset'), 'Please select an option.');
-            return false;
-        }
-        clearError(radioButtons[0].closest('fieldset'));
-        return true;
+    // Validate platform dropdown
+    const platform = document.getElementById("platform");
+    if (!isSelected(platform.value)) {
+        showError(platform, "Please select a platform.");
+        isValid = false;
+    } else {
+        clearError(platform);
     }
 
-    function isSelected(selectElement) {
-        if (selectElement.value === '') {
-            showError(selectElement, 'Please select an option.');
-            return false;
-        }
-        clearError(selectElement);
-        return true;
+    // Validate username (alphanumeric only)
+    const username = document.getElementById("user-id");
+    const usernamePattern = /^[a-zA-Z0-9]+$/;
+    if (!isNotEmpty(username.value) || !usernamePattern.test(username.value)) {
+        showError(username, "Username must be alphanumeric.");
+        isValid = false;
+    } else {
+        clearError(username);
     }
 
-    // Form validation on submit
-    form.addEventListener('submit', function (event) {
-        // Prevent form submission if any validation fails
+    // Validate hours gaming input
+    const hoursGaming = document.getElementById("hours-gaming");
+    if (!isNotEmpty(hoursGaming.value) || hoursGaming.value < 1 || hoursGaming.value > 100) {
+        showError(hoursGaming, "Please enter a valid number of hours (1-100).");
+        isValid = false;
+    } else {
+        clearError(hoursGaming);
+    }
+
+    // Prevent form submission if there are validation errors
+    if (!isValid) {
         event.preventDefault();
+    }
+}
 
-        let isFormValid = true;
-
-        // Validate Full Name
-        const username = document.getElementById('username');
-        if (!isNotEmpty(username)) isFormValid = false;
-
-        // Validate Birthday
-        const birthDate = document.getElementById('birth-date');
-        if (!isNotEmpty(birthDate)) isFormValid = false;
-
-        // Validate Game Genre (Radio Buttons)
-        const genreOptions = document.querySelectorAll('input[name="genre"]');
-        if (!hasCheckedOption(genreOptions)) isFormValid = false;
-
-        // Validate Features (Checkboxes are optional, so no validation needed here)
-
-        // Validate Platform Dropdown
-        const platform = document.getElementById('platform');
-        if (!isSelected(platform)) isFormValid = false;
-
-        // Validate Username (Alphanumeric with regex)
-        const userId = document.getElementById('user-id');
-        if (!isValidUsername(userId)) isFormValid = false;
-
-        // Validate Hours Spent Gaming (Ensures it's not empty and within limits)
-        const hoursGaming = document.getElementById('hours-gaming');
-        if (!isNotEmpty(hoursGaming)) isFormValid = false;
-
-        // If form is valid, submit it
-        if (isFormValid) {
-            form.submit();
-        }
-    });
-});
+// Attach the validation function to the form's submit event
+document.getElementById("survey-form").addEventListener("submit", validateForm);
