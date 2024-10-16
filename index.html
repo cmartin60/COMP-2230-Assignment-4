@@ -4,81 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comprehensive Survey Form</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to your external CSS -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
     <h1>Interactive Game Survey</h1>
     <form id="survey-form" action="https://httpbin.org/post" method="POST">
-        
-        <!-- Text Input for Name -->
+
         <fieldset>
             <legend>Personal Information</legend>
             <label for="username">Full Name:</label>
-            <input type="text" id="username" name="username" required>
-            <span id="error-name" class="error"></span>
+            <input type="text" id="username" name="username" aria-required="true" required>
+            <span id="error-name" class="error" aria-live="polite"></span>
         </fieldset>
 
-        <!-- Date Input -->
         <fieldset>
             <legend>Birth Date:</legend>
-            <label for="game-date">Birthday:</label>
-            <input type="date" id="birth-date" name="birth-date" required>
-            <span id="error-date" class="error"></span>
+            <label for="birth-date">Birthday:</label>
+            <input type="date" id="birth-date" name="birth-date" aria-required="true" required>
+            <span id="error-date" class="error" aria-live="polite"></span>
         </fieldset>
 
-        <!-- Radio Button Group for Single Choice Question -->
         <fieldset>
             <legend>Preferred Game Genre</legend>
-            <label><input type="radio" name="genre" value="Action" required> Horror</label>
-            <label><input type="radio" name="genre" value="RPG"> FPS</label>
-            <label><input type="radio" name="genre" value="Puzzle"> MOBA</label>
-            <span id="error-genre" class="error"></span>
+            <label for="genre-horror"><input type="radio" id="genre-horror" name="genre" value="Action" aria-required="true"> Horror</label>
+            <label for="genre-fps"><input type="radio" id="genre-fps" name="genre" value="RPG"> FPS</label>
+            <label for="genre-moba"><input type="radio" id="genre-moba" name="genre" value="Puzzle"> MOBA</label>
+            <span id="error-genre" class="error" aria-live="polite"></span>
         </fieldset>
 
-        <!-- Checkbox Group for Multiple Selections -->
         <fieldset>
             <legend>Features You Look For in a Game</legend>
-            <label><input type="checkbox" name="features" value="Multiplayer"> Multiplayer</label>
-            <label><input type="checkbox" name="features" value="Graphics"> High-quality Graphics</label>
-            <label><input type="checkbox" name="features" value="Story"> Story-driven</label>
-            <span id="error-features" class="error"></span>
+            <label for="features-multiplayer"><input type="checkbox" id="features-multiplayer" name="features" value="Multiplayer"> Multiplayer</label>
+            <label for="features-graphics"><input type="checkbox" id="features-graphics" name="features" value="Graphics"> High-quality Graphics</label>
+            <label for="features-story"><input type="checkbox" id="features-story" name="features" value="Story"> Story-driven</label>
+            <span id="error-features" class="error" aria-live="polite"></span>
         </fieldset>
 
-        <!-- Dropdown Menu -->
         <fieldset>
             <legend>Preferred Platform</legend>
             <label for="platform">Choose your platform:</label>
-            <select id="platform" name="platform" required>
+            <select id="platform" name="platform" aria-required="true" required>
                 <option value="">Select a platform</option>
                 <option value="PC">PC</option>
                 <option value="Console">Console</option>
                 <option value="Mobile">Mobile</option>
             </select>
-            <span id="error-platform" class="error"></span>
+            <span id="error-platform" class="error" aria-live="polite"></span>
         </fieldset>
 
-        <!-- Regex Validation Field -->
         <fieldset>
             <legend>Username (Alphanumeric Only)</legend>
             <label for="user-id">Username:</label>
-            <input type="text" id="user-id" name="user-id" pattern="^[a-zA-Z0-9]+$" title="Alphanumeric characters only" required>
-            <span id="error-user-id" class="error"></span>
+            <input type="text" id="user-id" name="user-id" pattern="^[a-zA-Z0-9]+$" title="Alphanumeric characters only" aria-required="true" required>
+            <span id="error-user-id" class="error" aria-live="polite"></span>
         </fieldset>
 
-        <!-- Additional Inputs: Number Field -->
         <fieldset>
             <legend>Hours Spent Gaming per Week</legend>
             <label for="hours-gaming">Enter hours:</label>
-            <input type="number" id="hours-gaming" name="hours-gaming" min="1" max="100" required>
-            <span id="error-hours" class="error"></span>
+            <input type="number" id="hours-gaming" name="hours-gaming" min="1" max="100" aria-required="true" required>
+            <span id="error-hours" class="error" aria-live="polite"></span>
         </fieldset>
 
-        <!-- Submit Button -->
         <button type="submit">Submit Survey</button>
 
     </form>
 
-    <script src="scripts.js"></script> <!-- Link to your external JS file -->
+    <script src="scripts.js"></script>
 </body>
 </html>

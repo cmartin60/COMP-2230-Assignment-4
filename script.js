@@ -1,47 +1,100 @@
-document.getElementById('survey-form').addEventListener('submit', function(event) {
-  event.preventDefault(); // Prevent form submission until validation passes
-  
-  let valid = true;
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('survey-form');
+    
+    // Error display utility function
+    function showError(inputElement, message) {
+        const errorElement = inputElement.nextElementSibling;
+        errorElement.textContent = message;
+        errorElement.classList.add('active');
+    }
 
-  // Name validation
-  const name = document.getElementById('name').value;
-  if (name === '') {
-    showError('name', 'Name is required');
-    valid = false;
-  }
+    function clearError(inputElement) {
+        const errorElement = inputElement.nextElementSibling;
+        errorElement.textContent = '';
+        errorElement.classList.remove('active');
+    }
 
-  // Email validation
-  const email = document.getElementById('email').value;
-  if (!isValidEmail(email)) {
-    showError('email', 'Valid email is required');
-    valid = false;
-  }
+    // Validation functions
+    function isNotEmpty(inputElement) {
+        if (inputElement.value.trim() === '') {
+            showError(inputElement, 'This field is required.');
+            return false;
+        }
+        clearError(inputElement);
+        return true;
+    }
 
-  // Radio button validation
-  const contactMethod = document.querySelector('input[name="contact-method"]:checked');
-  if (!contactMethod) {
-    showError('contact-method', 'Please select a contact method');
-    valid = false;
-  }
+    function isValidUsername(inputElement) {
+        const usernamePattern = /^[a-zA-Z0-9]+$/;
+        if (!usernamePattern.test(inputElement.value.trim())) {
+            showError(inputElement, 'Username must be alphanumeric.');
+            return false;
+        }
+        clearError(inputElement);
+        return true;
+    }
 
-  // Regex validation for username
-  const username = document.getElementById('username').value;
-  const usernamePattern = /^[a-zA-Z0-9]+$/;
-  if (!usernamePattern.test(username)) {
-    showError('username', 'Username must be alphanumeric');
-    valid = false;
-  }
+    function hasCheckedOption(radioButtons) {
+        let checked = false;
+        radioButtons.forEach(radio => {
+            if (radio.checked) {
+                checked = true;
+            }
+        });
 
-  if (valid) {
-    this.submit();
-  }
+        if (!checked) {
+            showError(radioButtons[0].closest('fieldset'), 'Please select an option.');
+            return false;
+        }
+        clearError(radioButtons[0].closest('fieldset'));
+        return true;
+    }
+
+    function isSelected(selectElement) {
+        if (selectElement.value === '') {
+            showError(selectElement, 'Please select an option.');
+            return false;
+        }
+        clearError(selectElement);
+        return true;
+    }
+
+    // Form validation on submit
+    form.addEventListener('submit', function (event) {
+        // Prevent form submission if any validation fails
+        event.preventDefault();
+
+        let isFormValid = true;
+
+        // Validate Full Name
+        const username = document.getElementById('username');
+        if (!isNotEmpty(username)) isFormValid = false;
+
+        // Validate Birthday
+        const birthDate = document.getElementById('birth-date');
+        if (!isNotEmpty(birthDate)) isFormValid = false;
+
+        // Validate Game Genre (Radio Buttons)
+        const genreOptions = document.querySelectorAll('input[name="genre"]');
+        if (!hasCheckedOption(genreOptions)) isFormValid = false;
+
+        // Validate Features (Checkboxes are optional, so no validation needed here)
+
+        // Validate Platform Dropdown
+        const platform = document.getElementById('platform');
+        if (!isSelected(platform)) isFormValid = false;
+
+        // Validate Username (Alphanumeric with regex)
+        const userId = document.getElementById('user-id');
+        if (!isValidUsername(userId)) isFormValid = false;
+
+        // Validate Hours Spent Gaming (Ensures it's not empty and within limits)
+        const hoursGaming = document.getElementById('hours-gaming');
+        if (!isNotEmpty(hoursGaming)) isFormValid = false;
+
+        // If form is valid, submit it
+        if (isFormValid) {
+            form.submit();
+        }
+    });
 });
-
-function isValidEmail(email) {
-  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  return emailPattern.test(email);
-}
-
-function showError(id, message) {
-  document.querySelector(`#${id} ~ .error-message`).textContent = message;
-}
