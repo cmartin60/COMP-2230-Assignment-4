@@ -80,20 +80,19 @@ function formHasErrors() {
 		}
 	});
 
+	// Features you look for in a game (checkboxes)
+	let featureChecked = document.querySelector('input[name="feature"]:checked');
+	if (!featureChecked) {
+		showError(null, "feature_error", errorFlag);
+		errorFlag = true;
+	}
+    
 	// Preferred Game Genre (radio buttons)
 	let genreChecked = document.querySelector('input[name="genre"]:checked');
 	if (!genreChecked) {
 		showError(null, "genre_error", errorFlag);
 		errorFlag = true;
 	}
-
-	// Features you look for in a game (checkboxes)
-	let featureChecked = document.querySelector('input[name="features"]:checked');
-	if (!featureChecked) {
-		showError(null, "feature_error", errorFlag);
-		errorFlag = true;
-	}
-
 	// Preferred Platform (dropdown)
 	let platformSelect = document.getElementById("platform");
 	if (platformSelect.value === "") {

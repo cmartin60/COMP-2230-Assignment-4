@@ -23,18 +23,6 @@
             </div>
 
         <fieldset>
-            <legend>Preferred Game Genre</legend>
-            <ul>
-                <li><input type="radio" id="genre-horror" name="genre" value="Horror" required><label for="Horror"> Horror</label></li>
-                <li><input type="radio" id="genre-fps" name="genre" value="FPS"><label for="fps"> FPS</label></li>
-                <li><input type="radio" id="genre-moba" name="genre" value="MOBA"><label for="moba"> MOBA</label></li>
-                <li><input type="radio" id="genre-other" name="genre" value="Other"><label for="other"> Other</label></li>
-            </ul>
-
-                <div class="error" id="genre_error">* Please enter you preferred game genre.</div>
-        </fieldset>
-
-        <fieldset>
             <legend>Features You Look For in a Game</legend>
             <ul>
                 <li><input type="checkbox" id="features-multiplayer" name="features" value="Multiplayer"><label for="multiplayer"></label> Multiplayer</label></li>
@@ -44,11 +32,23 @@
 
             <div class="error" id="feature_error">* Please enter features you look for in a game.</div>
         </fieldset>
+        
+        <fieldset>
+            <legend>Preferred Game Genre</legend>
+            <ul>
+                <li><input type="radio" id="genre-horror" name="genre" value="Horror"><label for="Horror"> Horror</label></li>
+                <li><input type="radio" id="genre-fps" name="genre" value="FPS"><label for="fps"> FPS</label></li>
+                <li><input type="radio" id="genre-moba" name="genre" value="MOBA"><label for="moba"> MOBA</label></li>
+                <li><input type="radio" id="genre-other" name="genre" value="Other"><label for="other"> Other</label></li>
+            </ul>
+
+                <div class="error" id="genre_error">* Please enter you preferred game genre.</div>
+        </fieldset>
 
         <fieldset>
             <legend>Preferred Platform</legend>
             <label for="platform">Choose your platform:</label>
-            <select id="platform" name="platform" aria-required="true" required>
+            <select id="platform" name="platform">
                 <option value="">Select a platform</option>
                 <option value="PC">PC</option>
                 <option value="Console">Console</option>
