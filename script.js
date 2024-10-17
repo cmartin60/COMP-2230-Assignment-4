@@ -1,108 +1,145 @@
-// Validation Functions
-function isNotEmpty(value) {
-    return value.trim() !== "";
+/*
+	Survey Form Validation
+	Date: 2024-10-17
+	Author: Pawan Earnest
+*/
+
+/*
+ * Handles the submit event of the survey form.
+ *
+ * param e  A reference to the submit event.
+ * return   True if no validation errors; False if the form has validation errors.
+ */
+function validate(e) {
+	// Hide all error elements on the page
+	hideAllErrors();
+
+	// Check if the form has errors
+	if (formHasErrors()) {
+		// Prevent the form from submitting
+		e.preventDefault();
+		return false;
+	}
+
+	return true;
 }
 
-function isValidName(name) {
-    const namePattern = /^[a-zA-Z]+$/;
-    return namePattern.test(name);
+/*
+ * Handles the reset event for the form.
+ *
+ * param e A reference to the reset event.
+ * return  True allows the reset to happen; False prevents the browser from resetting the form.
+ */
+function resetForm(e) {
+	// Confirm that the user wants to reset the form
+	if (confirm('Clear survey?')) {
+		// Ensure all error fields are hidden
+		hideAllErrors();
+		document.getElementById("fname").focus();
+		return true;
+	}
+
+	e.preventDefault();
+	return false;
 }
 
-function isSelected(value) {
-    return value !== "";
+/*
+ * Shows the error message for a specific form field.
+ *
+ * param formField  The form field where the error occurred.
+ * param errorId    The id of the error element to display.
+ * param errorFlag  Flag to determine if the field should be focused.
+ */
+function showError(formField, errorId, errorFlag) {
+	document.getElementById(errorId).style.display = "block";
+
+	if (!errorFlag) {
+		formField.focus();
+		if (formField.type === "text") {
+			formField.select();
+		}
+	}
 }
 
-function hasCheckedOption(name) {
-    const options = document.querySelectorAll(`input[name="${name}"]`);
-    return Array.from(options).some(option => option.checked);
+/*
+ * Does all the error checking for the form.
+ *
+ * return   True if an error was found; False if no errors were found.
+ */
+function formHasErrors() {
+
+	// Required text fields: First name, Last name, Birth Date
+	let requiredFields = ["fname", "lname"];
+    let errorFlag = false;
+
+	requiredFields.forEach(function(field) {
+		let inputField = document.getElementById(field);
+		if (!formFieldHasInput(inputField)) {
+			showError(inputField, field + "_error", errorFlag);
+			errorFlag = true;
+		}
+	});
+
+	// Preferred Game Genre (radio buttons)
+	let genreChecked = document.querySelector('input[name="genre"]:checked');
+	if (!genreChecked) {
+		showError(null, "genre_error", errorFlag);
+		errorFlag = true;
+	}
+
+	// Features you look for in a game (checkboxes)
+	let featureChecked = document.querySelector('input[name="features"]:checked');
+	if (!featureChecked) {
+		showError(null, "feature_error", errorFlag);
+		errorFlag = true;
+	}
+
+	// Preferred Platform (dropdown)
+	let platformSelect = document.getElementById("platform");
+	if (platformSelect.value === "") {
+		showError(platformSelect, "platform_error", errorFlag);
+		errorFlag = true;
+	}
+
+	return errorFlag;
 }
 
-// Show Error Messages
-function showError(element, message) {
-    const errorSpan = document.getElementById(`error-${element.id}`);
-    errorSpan.textContent = message;
-    element.classList.add('error-border');
+/*
+ * Resets (hides) all of the error messages on the page.
+ */
+function hideAllErrors() {
+	let errorFields = document.getElementsByClassName("error");
+	for (let i = 0; i < errorFields.length; i++) {
+		errorFields[i].style.display = "none";
+	}
 }
 
-// Clear Error Messages
-function clearError(element) {
-    const errorSpan = document.getElementById(`error-${element.id}`);
-    errorSpan.textContent = "";
-    element.classList.remove('error-border');
+/*
+ * Determines if a text field element has input.
+ *
+ * param   fieldElement A text field input element object.
+ * return  True if the field contains input; False if nothing entered.
+ */
+function formFieldHasInput(fieldElement) {
+	if (fieldElement.value == null || fieldElement.value.trim() === "") {
+		return false;
+	}
+	return true;
 }
 
-// Form Validation
-function validateForm(event) {
-    let isValid = true;
+/**
+ * Handles the load event of the document.
+ */
+function load() {
+	// Add event listener for the form submit
+	document.getElementById("survey-form").addEventListener("submit", validate);
 
-    // Validate first and last name
-    const firstName = document.getElementById("firstname");
-    if (!isNotEmpty(firstName.value) || !isValidName(firstName.value)) {
-        showError(firstName, "Please enter a valid first name.");
-        isValid = false;
-    } else {
-        clearError(firstName);
-    }
+	// Reset the form using the default browser reset
+	document.getElementById("survey-form").reset();
 
-    const lastName = document.getElementById("lastname");
-    if (!isNotEmpty(lastName.value) || !isValidName(lastName.value)) {
-        showError(lastName, "Please enter a valid last name.");
-        isValid = false;
-    } else {
-        clearError(lastName);
-    }
-
-    // Validate birth date
-    const birthDate = document.getElementById("birth-date");
-    if (!isNotEmpty(birthDate.value)) {
-        showError(birthDate, "Please select your birth date.");
-        isValid = false;
-    } else {
-        clearError(birthDate);
-    }
-
-    // Validate radio button (game genre)
-    if (!hasCheckedOption("genre")) {
-        const genreFieldset = document.querySelector("fieldset legend[for='genre']");
-        showError(genreFieldset, "Please select a game genre.");
-        isValid = false;
-    } else {
-        clearError(genreFieldset);
-    }
-
-    // Validate platform dropdown
-    const platform = document.getElementById("platform");
-    if (!isSelected(platform.value)) {
-        showError(platform, "Please select a platform.");
-        isValid = false;
-    } else {
-        clearError(platform);
-    }
-
-    // Validate username (alphanumeric only)
-    const username = document.getElementById("user-id");
-    const usernamePattern = /^[a-zA-Z0-9]+$/;
-    if (!isNotEmpty(username.value) || !usernamePattern.test(username.value)) {
-        showError(username, "Username must be alphanumeric.");
-        isValid = false;
-    } else {
-        clearError(username);
-    }
-
-    // Validate hours gaming input
-    const hoursGaming = document.getElementById("hours-gaming");
-    if (!isNotEmpty(hoursGaming.value) || hoursGaming.value < 1 || hoursGaming.value > 100) {
-        showError(hoursGaming, "Please enter a valid number of hours (1-100).");
-        isValid = false;
-    } else {
-        clearError(hoursGaming);
-    }
-
-    // Prevent form submission if there are validation errors
-    if (!isValid) {
-        event.preventDefault();
-    }
+	// Add event listener for the form reset
+	document.getElementById("survey-form").addEventListener("reset", resetForm);
 }
 
-// Attach the validation function to the form's submit event
-document.getElementById("survey-form").addEventListener("submit", validateForm);
+// Add the event listener for the document load
+document.addEventListener("DOMContentLoaded", load);

@@ -3,46 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comprehensive Survey Form</title>
-    <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>Interactive Game Survey</title>
 </head>
 <body>
-
-    <h1>Interactive Game Survey</h1>
     <form id="survey-form" action="https://httpbin.org/post" method="POST">
-
         <fieldset>
             <legend>Personal Information</legend>
-            <label for="firstname">First Name:</label>
-            <input type="text" id="firstname" name="first_name" pattern="^[a-zA-Z]+$" aria-describedby="error-firstname" required>
-            <span id="error-firstname" class="error" aria-live="polite"></span>
-            <label for="lastname">Last Name:</label>
-            <input type="text" id="lastname" name="last_name" pattern="^[a-zA-Z]+$" aria-describedby="error-lastname" required>
-            <span id="error-lastname" class="error" aria-live="polite"></span>
-        </fieldset>
-
-        <fieldset>
-            <legend>Birth Date:</legend>
-            <label for="birth-date">Birthday:</label>
-            <input type="date" id="birth-date" name="birth-date" required>
-            <span id="error-date" class="error" aria-live="polite"></span>
-        </fieldset>
+            <div class="formfield">
+                <label for="fname" class="student">First Name:</label>
+                <input type="text" id="fname" name="fname"  maxlength="15" value="" autofocus="autofocus" />					
+                <div class="fname_error error" id="fname_error">* Please enter your first name.</div>
+            </div>
+            <div class="formfield">
+                <label for="lname" class="student">Last Name:</label>
+                <input type="text" id = "lname" name="lname" maxlength="20" />
+                <div class="lname_error error" id="lname_error">* Please enter your last name.</div>
+            </div>
 
         <fieldset>
             <legend>Preferred Game Genre</legend>
-            <label for="genre-horror"><input type="radio" id="genre-horror" name="genre" value="Horror" required> Horror</label>
-            <label for="genre-fps"><input type="radio" id="genre-fps" name="genre" value="FPS"> FPS</label>
-            <label for="genre-moba"><input type="radio" id="genre-moba" name="genre" value="MOBA"> MOBA</label>
-            <label for="genre-other"><input type="radio" id="genre-other" name="genre" value="Other"> Other</label>
-            <span id="error-genre" class="error" aria-live="polite"></span>
+            <ul>
+                <li><input type="radio" id="genre-horror" name="genre" value="Horror" required><label for="Horror"> Horror</label></li>
+                <li><input type="radio" id="genre-fps" name="genre" value="FPS"><label for="fps"> FPS</label></li>
+                <li><input type="radio" id="genre-moba" name="genre" value="MOBA"><label for="moba"> MOBA</label></li>
+                <li><input type="radio" id="genre-other" name="genre" value="Other"><label for="other"> Other</label></li>
+            </ul>
+
+                <div class="error" id="genre_error">* Please enter you preferred game genre.</div>
         </fieldset>
 
         <fieldset>
             <legend>Features You Look For in a Game</legend>
-            <label for="features-multiplayer"><input type="checkbox" id="features-multiplayer" name="features" value="Multiplayer"> Multiplayer</label>
-            <label for="features-graphics"><input type="checkbox" id="features-graphics" name="features" value="Graphics"> High-quality Graphics</label>
-            <label for="features-story"><input type="checkbox" id="features-story" name="features" value="Story"> Story-driven</label>
-            <span id="error-features" class="error" aria-live="polite"></span>
+            <ul>
+                <li><input type="checkbox" id="features-multiplayer" name="features" value="Multiplayer"><label for="multiplayer"></label> Multiplayer</label></li>
+                <li><input type="checkbox" id="features-graphics" name="features" value="Graphics"><label for="graphics"></label> High-quality Graphics</label></li>
+                <li><input type="checkbox" id="features-story" name="features" value="Story"><label for="story"></label> Story-driven</label></li>
+            </ul>
+
+            <div class="error" id="feature_error">* Please enter features you look for in a game.</div>
         </fieldset>
 
         <fieldset>
@@ -54,27 +54,15 @@
                 <option value="Console">Console</option>
                 <option value="Mobile">Mobile</option>
             </select>
-            <span id="error-platform" class="error" aria-live="polite"></span>
+
+            <div class="error" id="platform_error">* Please enter preferred platform</div>
         </fieldset>
 
         <fieldset>
-            <legend>Username</legend>
-            <label for="user-id">Username:</label>
-            <input type="text" id="user-id" name="user-id" pattern="^[a-zA-Z0-9]+$" title="Alphanumeric characters only" aria-required="true" required>
-            <span id="error-user-id" class="error" aria-live="polite"></span>
+            <button type="reset" >Clear Survey</button>
+            <button type="submit" >Submit Survey</button>
         </fieldset>
-
-        <fieldset>
-            <legend>Hours Spent Gaming per Week</legend>
-            <label for="hours-gaming">Enter hours:</label>
-            <input type="number" id="hours-gaming" name="hours-gaming" min="1" max="100" aria-required="true" required>
-            <span id="error-hours" class="error" aria-live="polite"></span>
-        </fieldset>
-
-        <button type="submit">Submit Survey</button>
 
     </form>
-
-    <script src="script.js"></script>
 </body>
 </html>

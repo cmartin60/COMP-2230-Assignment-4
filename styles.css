@@ -33,7 +33,15 @@ label {
     display: block;
 }
 
-input, select, textarea, button {
+ul {
+    list-style: none;
+    margin: 0;
+}
+
+input,
+select,
+textarea,
+button {
     font-family: inherit;
     font-size: 1rem;
     padding: 10px;
@@ -44,22 +52,18 @@ input, select, textarea, button {
     box-sizing: border-box;
 }
 
-input[type="radio"], input[type="checkbox"] {
-    width: auto;
-    margin-right: 5px;
-}
-
+/* Error message styles */
 .error {
     color: red;
-    font-size: 0.875em;
+    font-style: italic;
+    font-weight: bold;
+    padding: 10px 0;
+    display: none;
 }
 
-.error-border {
-    border-color: red;
-}
-
+/* Media query for responsive design */
 @media (max-width: 768px) {
     form {
-      padding: 0.5em;
+        padding: 0.5em;
     }
-  }
+}
