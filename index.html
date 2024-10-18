@@ -3,67 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="script.js"></script>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-    <title>Interactive Game Survey</title>
+    <title>Game Preferences Survey</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    <form id="survey-form" action="https://httpbin.org/post" method="POST">
-        <fieldset>
-            <legend>Personal Information</legend>
-            <div class="formfield">
-                <label for="fname" class="student">First Name:</label>
-                <input type="text" id="fname" name="fname"  maxlength="15" value="" autofocus="autofocus" />					
-                <div class="fname_error error" id="fname_error">* Please enter your first name.</div>
-            </div>
-            <div class="formfield">
-                <label for="lname" class="student">Last Name:</label>
-                <input type="text" id = "lname" name="lname" maxlength="20" />
-                <div class="lname_error error" id="lname_error">* Please enter your last name.</div>
-            </div>
+    <main>
+        <div class="container">
+            <form id="survey-form">
+                <h2>Game Preferences Survey</h2>
 
-        <fieldset>
-            <legend>Preferred Game Genre</legend>
-            <ul>
-                <li><input type="radio" id="genre-horror" name="genre" value="Horror"><label for="Horror"> Horror</label></li>
-                <li><input type="radio" id="genre-fps" name="genre" value="FPS"><label for="fps"> FPS</label></li>
-                <li><input type="radio" id="genre-moba" name="genre" value="MOBA"><label for="moba"> MOBA</label></li>
-                <li><input type="radio" id="genre-other" name="genre" value="Other"><label for="other"> Other</label></li>
-            </ul>
+                <div id="fname-container" class="survey-field">
+                    <label for="fname">First Name:</label>
+                    <input type="text" id="fname" name="fname" maxlength="15" value="" autofocus="autofocus" />
+                    <span class="survey-error" id="fname_error" style="display:none;">* Please enter your first name.</span>
+                </div>
+                <br>
+                <div id="lname-container" class="survey-field">
+                    <label for="lname">Last Name:</label>
+                    <input type="text" id="lname" name="lname" maxlength="20" />
+                    <span class="survey-error" id="lname_error" style="display:none;">* Please enter your last name.</span>
+                </div>
+                <br>
+                <div id="genre-container" class="survey-field">
+                    <legend>Preferred Game Genre:</legend>
+                    <div class="box">
+                        <input type="radio" id="genre-horror" name="genre" value="Horror">
+                        <label for="genre-horror">Horror</label>
+                        <input type="radio" id="genre-fps" name="genre" value="FPS">
+                        <label for="genre-fps">FPS</label>
+                        <input type="radio" id="genre-moba" name="genre" value="MOBA">
+                        <label for="genre-moba">MOBA</label>
+                        <input type="radio" id="genre-other" name="genre" value="Other">
+                        <label for="genre-other">Other</label>
+                    </div>
+                    <span class="survey-error" id="genre_error" style="display:none;">* Please select a game genre.</span>
+                </div>
 
-                <div class="error" id="genre_error">* Please enter you preferred game genre.</div>
-        </fieldset>
-        
-        <fieldset>
-            <legend>Features You Look For in a Game</legend>
-            <ul>
-                <li><input type="checkbox" id="features-multiplayer" name="features" value="Multiplayer"><label for="multiplayer"></label> Multiplayer</label></li>
-                <li><input type="checkbox" id="features-graphics" name="features" value="Graphics"><label for="graphics"></label> High-quality Graphics</label></li>
-                <li><input type="checkbox" id="features-story" name="features" value="Story"><label for="story"></label> Story-driven</label></li>
-            </ul>
+                <div id="features-container" class="survey-field">
+                    <legend>Features You Look For in a Game:</legend>
+                    <div class="box">
+                        <input type="checkbox" id="features-multiplayer" name="features" value="Multiplayer">
+                        <label for="features-multiplayer">Multiplayer</label>
+                        <input type="checkbox" id="features-graphics" name="features" value="Graphics">
+                        <label for="features-graphics">High-quality Graphics</label>
+                        <input type="checkbox" id="features-story" name="features" value="Story">
+                        <label for="features-story">Story-driven</label>
+                    </div>
+                    <span class="survey-error" id="feature_error" style="display:none;">* Please select at least one feature.</span>
+                </div>
 
-            <div class="error" id="feature_error">* Please enter features you look for in a game.</div>
-        </fieldset>
-        
+                <div id="platform-container" class="survey-field">
+                    <label for="platform">Preferred Platform:</label>
+                    <select id="platform" name="platform">
+                        <option value="">Select a platform</option>
+                        <option value="PC">PC</option>
+                        <option value="Console">Console</option>
+                        <option value="Mobile">Mobile</option>
+                    </select>
+                    <span class="survey-error" id="platform_error" style="display:none;">* Please select your preferred platform.</span>
+                </div>
 
-        <fieldset>
-            <legend>Preferred Platform</legend>
-            <label for="platform">Choose your platform:</label>
-            <select id="platform" name="platform">
-                <option value="">Select a platform</option>
-                <option value="PC">PC</option>
-                <option value="Console">Console</option>
-                <option value="Mobile">Mobile</option>
-            </select>
+                <button type="submit" id="survey-submit" class="survey-formButton">Submit Survey</button>
+            </form>
+        </div>
 
-            <div class="error" id="platform_error">* Please enter preferred platform</div>
-        </fieldset>
-
-        <fieldset>
-            <button type="reset" >Clear Survey</button>
-            <button type="submit" >Submit Survey</button>
-        </fieldset>
-
-    </form>
+        <script src="script.js"></script>
+    </main>
 </body>
 </html>
